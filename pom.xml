@@ -10,6 +10,7 @@
 
 	<modules>
 		<module>es-core</module>
+		<module>es-service</module>
 		<module>es-utils</module>
 	</modules>
 
@@ -24,6 +25,8 @@
 		<jackson.version>2.3.3</jackson.version>
 		<fastjson.version>1.2.7</fastjson.version>
 		<log4j.version>1.2.16</log4j.version>
+		<!-- es -->
+		<elasticsearch.version>5.6.4</elasticsearch.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -216,7 +219,7 @@
 				<scope>${libScope}</scope>
 				<version>${org.springframework-version}</version>
 			</dependency>
-			<!--javax.validation(JSR-303) -->
+			<!-- javax.validation(JSR-303) -->
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
@@ -234,7 +237,7 @@
 				<artifactId>el-api</artifactId>
 				<version>2.2</version>
 			</dependency>
-			<!--AspectJ -->
+			<!-- AspectJ -->
 			<dependency>
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjrt</artifactId>
@@ -248,7 +251,7 @@
 				<version>1</version>
 				<scope>${libScope}</scope>
 			</dependency>
-			<!--JSON -->
+			<!-- JSON -->
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-mapper-asl</artifactId>
@@ -278,6 +281,12 @@
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
 			</dependency>
+			<!-- elasticsearch -->
+			<dependency>
+			    <groupId>org.elasticsearch</groupId>
+			    <artifactId>elasticsearch</artifactId>
+			    <version>${elasticsearch.version}</version>
+			</dependency>			
 			<!-- web -->
 			<dependency>
 				<groupId>javax.servlet</groupId>

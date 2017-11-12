@@ -24,6 +24,10 @@
 			<scope>${libScope}</scope>
 		</dependency>
 		<dependency>
+		    <groupId>org.elasticsearch</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		</dependency>	
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 		</dependency>
