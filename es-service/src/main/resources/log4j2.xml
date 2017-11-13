@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<configuration status="error" monitorInterval="30">  
+    <appenders>  
+        <Console name="console" target="SYSTEM_OUT">  
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>  
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+        </Console>  
+          
+        <RollingFile name="info" fileName="log/qf-es.log" filePattern="logs/$${date:yyyy-MM}/qf-es-%i.log.gz" append="false">  
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/> 
+            <SizeBasedTriggeringPolicy size="2MB"/>   
+        </RollingFile>  
+          
+        <RollingFile name="error" fileName="logs/qf-es-error.log" filePattern="logs/$${date:yyyy-MM}/qf-es-error-%i.log.gz">  
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>  
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>  
+            <SizeBasedTriggeringPolicy size="2MB"/>  
+        </RollingFile>  
+    </appenders>  
+      
+    <loggers>
+        <root level="info">  
+            <appender-ref ref="console"/>
+            <appender-ref ref="info" />
+            <appender-ref ref="error"/>
+        </root>  
+        
+        <logger name="org.elasticsearch" level="error"/>
+    </loggers>  
+</configuration>

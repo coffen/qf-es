@@ -25,6 +25,7 @@
 		<jackson.version>2.8.6</jackson.version>
 		<fastjson.version>1.2.7</fastjson.version>
 		<log4j.version>1.2.16</log4j.version>
+		<log4j2.version>2.7</log4j2.version>
 		<guava.version>23.0</guava.version>
 		<!-- es -->
 		<elasticsearch.version>5.6.4</elasticsearch.version>
@@ -445,6 +446,11 @@
 				<artifactId>log4j</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
+			<dependency>
+			    <groupId>org.apache.logging.log4j</groupId>
+			    <artifactId>log4j-core</artifactId>
+			    <version>${log4j2.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -463,6 +469,10 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<scope>${libScope}</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
 		</dependency>
 		<!--Test -->
 		<dependency>
