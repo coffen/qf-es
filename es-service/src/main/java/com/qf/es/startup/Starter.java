@@ -1,11 +1,8 @@
 package com.qf.es.startup;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.core.io.support.ResourcePropertySource;
 
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.qf.es.config.ESConfig;
@@ -35,13 +32,6 @@ public class Starter extends AbstractIdleService {
     @Override
     protected void startUp() throws Exception {
         context = new AnnotationConfigApplicationContext();
-        try {
-            context.getEnvironment().getPropertySources().addFirst(new ResourcePropertySource("classpath:filtered.properties"));
-            log.info("filtered.properties loaded");
-        } 
-        catch (final IOException e) {
-        	log.info("didn't find filtered.properties in classpath so not loading it in the AppContextInitialized");
-        }
         context.register(ESConfig.class);
         context.refresh();
         context.start();

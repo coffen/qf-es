@@ -1,13 +1,21 @@
 package com.qf.es.config;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:env/es-config.properties")
 public class ESConfig {
 	
 	@Value("${cluster.nodes}")
@@ -29,8 +37,19 @@ public class ESConfig {
 	private String clientTransportNodesSamplerInterval;
 	
 	@Bean
-	TransportClient transportClient(Settings settings) {
-		return new PreBuiltTransportClient(settings);
+	@Autowired
+	TransportClient transportClient(Settings settings) throws UnknownHostException {
+		TransportClient client = new PreBuiltTransportClient(settings);
+		String[] nodes = clusterNodes.split(",");
+		for (String node : nodes) {
+			if (StringUtils.isNotBlank(node)) {
+				String[] hostPort = node.split(":");
+				if (hostPort.length == 2 && StringUtils.isNotBlank(hostPort[0]) && StringUtils.isNumeric(hostPort[1])) {
+					client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostPort[0]), Integer.valueOf(hostPort[1])));
+				}
+			}
+		}
+		return client;
 	}
 	
 	@Bean

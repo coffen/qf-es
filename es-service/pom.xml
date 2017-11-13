@@ -10,7 +10,7 @@
 
 	<artifactId>es-service</artifactId>
 	<packaging>jar</packaging>
-	<name>QF es service</name>
+	<name>QF ES service</name>
 
 	<dependencies>
 		<dependency>

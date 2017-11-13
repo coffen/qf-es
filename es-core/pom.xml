@@ -10,7 +10,7 @@
 
 	<artifactId>es-core</artifactId>
 	<packaging>jar</packaging>
-	<name>QF es core</name>
+	<name>QF ES core</name>
 
 	<dependencies>
 		<dependency>

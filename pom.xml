@@ -6,7 +6,7 @@
 	<artifactId>qf-es</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>Qianfan es Application</name>
+	<name>Qianfan ES Application</name>
 
 	<modules>
 		<module>es-core</module>
@@ -22,7 +22,7 @@
 		<httpclient.version>4.4.1</httpclient.version>
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<ch.qos.logback-version>1.0.13</ch.qos.logback-version>
-		<jackson.version>2.3.3</jackson.version>
+		<jackson.version>2.8.6</jackson.version>
 		<fastjson.version>1.2.7</fastjson.version>
 		<log4j.version>1.2.16</log4j.version>
 		<guava.version>23.0</guava.version>
@@ -499,6 +499,16 @@
 			<artifactId>objenesis</artifactId>
 			<version>1.3</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<scope>${libScope}</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
 		</dependency>
 	</dependencies>
 

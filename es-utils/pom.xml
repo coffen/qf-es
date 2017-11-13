@@ -10,7 +10,7 @@
 
 	<artifactId>es-utils</artifactId>
 	<packaging>jar</packaging>
-	<name>QF es utils</name>
+	<name>QF ES utils</name>
 
 	<dependencies>
 	</dependencies>
