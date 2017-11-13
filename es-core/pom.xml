@@ -24,8 +24,8 @@
 			<scope>${libScope}</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.elasticsearch</groupId>
-		    <artifactId>elasticsearch</artifactId>
+		    <groupId>org.elasticsearch.client</groupId>
+		    <artifactId>transport</artifactId>
 		</dependency>	
 		<dependency>
 			<groupId>com.alibaba</groupId>
