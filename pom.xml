@@ -28,7 +28,7 @@
 		<log4j2.version>2.7</log4j2.version>
 		<guava.version>23.0</guava.version>
 		<!-- es -->
-		<elasticsearch.version>5.6.4</elasticsearch.version>
+		<elasticsearch.version>6.0.0</elasticsearch.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -136,6 +136,12 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
 				<version>${org.springframework-version}</version>
+				<scope>${libScope}</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>4.0.3.RELEASE</version>
 				<scope>${libScope}</scope>
 			</dependency>
 			<dependency>

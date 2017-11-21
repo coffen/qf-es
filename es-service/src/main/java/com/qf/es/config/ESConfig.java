@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class ESConfig {
 			if (StringUtils.isNotBlank(node)) {
 				String[] hostPort = node.split(":");
 				if (hostPort.length == 2 && StringUtils.isNotBlank(hostPort[0]) && StringUtils.isNumeric(hostPort[1])) {
-					client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostPort[0]), Integer.valueOf(hostPort[1])));
+					client.addTransportAddress(new TransportAddress(InetAddress.getByName(hostPort[0]), Integer.valueOf(hostPort[1])));
 				}
 			}
 		}
