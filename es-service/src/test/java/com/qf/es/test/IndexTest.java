@@ -39,7 +39,12 @@ public class IndexTest extends BaseUnit {
 	@Test
 	public void buildIndex() {
 		IndicesAdminClient client = transportClient.admin().indices();
-		CreateIndexResponse response = client.prepareCreate("test").setSettings(Settings.builder().put("index.number_of_shards", 3).put("index.number_of_replicas", 2)).get();
+		Settings settings = Settings.builder()
+				.put("index.number_of_shards", 3)
+				.put("index.number_of_replicas", 2)
+				.put("index.analysis.analyzer.ik.type", "ik_smart")
+				.build();
+		CreateIndexResponse response = client.prepareCreate("test").setSettings(settings).get();
 		log.error(JSON.toJSONString(response));
 	}
 
