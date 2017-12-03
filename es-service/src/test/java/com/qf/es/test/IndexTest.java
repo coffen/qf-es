@@ -1,6 +1,8 @@
 package com.qf.es.test;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -45,6 +47,14 @@ public class IndexTest extends BaseUnit {
 				.put("index.analysis.analyzer.ik.type", "ik_smart")
 				.build();
 		CreateIndexResponse response = client.prepareCreate("test").setSettings(settings).get();
+		log.error(JSON.toJSONString(response));
+	}
+	
+	@Test
+	public void indexData() {
+		IndexRequestBuilder builder = transportClient.prepareIndex("test", "user", "1");
+		builder.setSource("name", "李可夫", "weight", 168);
+		IndexResponse response = builder.execute().actionGet();
 		log.error(JSON.toJSONString(response));
 	}
 

@@ -5,7 +5,7 @@ package com.qf.es.model;
  * <p>
  * Project Name: 淘客
  * <br>
- * Description: 索引映射字段
+ * Description: 索引域
  * <br>
  * File Name: Field.java
  * <br>
@@ -18,43 +18,13 @@ package com.qf.es.model;
  * @version: v1.0
  *
  */
-public class Field {
+public interface Field {
 	
-	private String name;
-	private boolean index;
-	private boolean boost;
-	private boolean stored;
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public boolean isIndex() {
-		return index;
-	}
-	
-	public void setIndex(boolean index) {
-		this.index = index;
-	}
-	
-	public boolean isBoost() {
-		return boost;
-	}
-	
-	public void setBoost(boolean boost) {
-		this.boost = boost;
-	}
-	
-	public boolean isStored() {
-		return stored;
-	}
-	
-	public void setStored(boolean stored) {
-		this.stored = stored;
-	}
+	/**
+	 * 获取索引域名称
+	 * 
+	 * @return
+	 */
+	public String getName();
 
 }
