@@ -24,7 +24,7 @@ public class MappingParameter {
 	
 	private static MappingParameter parameter = new MappingParameter();
 	
-	public final static AnalyzerType ANALYZER_TYPE = parameter.new AnalyzerType();
+	public final static Analyzer ANALYZER = parameter.new Analyzer();
 	public final static Store STORE = parameter.new Store();
 	public final static Index INDEX = parameter.new Index();
 	public final static Boost BOOST = parameter.new Boost();
@@ -33,9 +33,13 @@ public class MappingParameter {
 	
 	private MappingParameter() {};
 	
-	public class AnalyzerType extends MappingParameterType {
+	public class Analyzer extends MappingParameterType {
 		
-		private AnalyzerType() {};
+		private Analyzer() {};
+		
+		public String getPropertyName() {
+			return "analyzer";
+		}
 		
 		public MappingParameterValue STANDARD = new MappingParameterValue(this, "standard");
 		public MappingParameterValue SIMPLE = new MappingParameterValue(this, "simple");
@@ -54,6 +58,10 @@ public class MappingParameter {
 		
 		private Store() {};
 		
+		public String getPropertyName() {
+			return "store";
+		}
+		
 		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
 		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
 		
@@ -63,6 +71,10 @@ public class MappingParameter {
 		
 		private Index() {};
 		
+		public String getPropertyName() {
+			return "index";
+		}
+		
 		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
 		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
 		
@@ -71,6 +83,10 @@ public class MappingParameter {
 	public class Boost extends MappingParameterType {
 
 		private Boost() {};
+		
+		public String getPropertyName() {
+			return "boost";
+		}
 		
 		public MappingParameterValue value(Float value) {
 			return new MappingParameterValue(this, value);
@@ -82,6 +98,10 @@ public class MappingParameter {
 
 		private Format() {};
 		
+		public String getPropertyName() {
+			return "format";
+		}
+		
 		public MappingParameterValue value(String value) {
 			return new MappingParameterValue(this, value);
 		}
@@ -92,20 +112,24 @@ public class MappingParameter {
 
 		private Fields() {};
 		
-		public MappingParameterValue value(StringField value) {
+		public String getPropertyName() {
+			return "fields";
+		}
+		
+		public MappingParameterValue value(MappingField<? extends StringField> value) {
 			return new MappingParameterValue(this, value);
 		}
 		
 	}
 	
-	public class MappingParameterType {
-		
-		private MappingParameterType() {};
+	public abstract class MappingParameterType implements Setting {
+				
+		private MappingParameterType() {}
 
 	}
 	
 	public class MappingParameterValue {
-		
+
 		private MappingParameterType parameterType;
 		private Object value;
 		

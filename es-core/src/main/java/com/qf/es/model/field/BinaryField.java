@@ -1,15 +1,7 @@
 package com.qf.es.model.field;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Set;
-
-import com.google.common.collect.Sets;
-import com.qf.es.model.FieldValue;
-import com.qf.es.model.MappingField;
+import com.qf.es.model.FieldType;
 import com.qf.es.model.MappingParameter;
-import com.qf.es.model.MappingParameter.MappingParameterType;
-import com.qf.es.model.MappingParameter.MappingParameterValue;
-import com.qf.es.model.exception.FieldMappingException;
 
 /**
  * 
@@ -29,51 +21,17 @@ import com.qf.es.model.exception.FieldMappingException;
  * @version: v1.0
  *
  */
-public class BinaryField extends MappingField {
+public final class BinaryField extends FieldType {
 	
-	private final static Set<MappingParameterType> SUPPORTED_PARAMETER = Sets.newHashSet(MappingParameter.STORE);
-	private final static Set<Class<?>> SUPPORTED_TYPE = Sets.newHashSet(String.class, byte[].class);
-	
-	public BinaryField(String name) {
-		super(name);
-	}
-	
-	public FieldValue buildValue(Object obj) throws FieldMappingException {
-		String binary = null;
-		if (obj instanceof byte[]) {
-			byte[] byteArr = (byte[])obj;
-			try {
-				binary = new String(byteArr, "UTF-8");
-			}
-			catch (UnsupportedEncodingException e) {
-				throw new FieldMappingException(fieldName, "Transfer byte[] 2 String error!");
-			}			
-		}
-		else if (obj instanceof String) {
-			binary = (String)obj;
-		}
-		else {
-			throw new FieldMappingException(fieldName, "Unsupported value type!");
-		}
-		if (binary.indexOf('\n') >= 0) {
-			throw new FieldMappingException(fieldName, "String value must not have embedded newlines!");
-		}
-		return new FieldValue(fieldName, binary);
+	static {
+		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 	}
 
-	public boolean supportType(Class<?> clazz) {
-		return SUPPORTED_TYPE.contains(clazz);
-	}
-
-	public boolean supportParameter(MappingParameterValue parameterType) {
-		if (parameterType == null) {
-			return false;
-		}
-		return SUPPORTED_PARAMETER.contains(parameterType.getParameterType());
-	}
-	
-	public String getFieldType() {
+	@Override
+	public String getPropertyName() {
 		return "binary";
 	}
+	
+	
 
 }

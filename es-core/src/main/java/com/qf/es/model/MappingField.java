@@ -1,12 +1,16 @@
 package com.qf.es.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.qf.es.model.MappingParameter.MappingParameterType;
 import com.qf.es.model.MappingParameter.MappingParameterValue;
-import com.qf.es.model.exception.FieldMappingException;
 
 /**
  * 
@@ -26,72 +30,77 @@ import com.qf.es.model.exception.FieldMappingException;
  * @version: v1.0
  *
  */
-public abstract class MappingField implements Field {
+public class MappingField<T extends FieldType> implements Setting {
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	private final Set<MappingParameterValue> parameterSet = new HashSet<MappingParameterValue>();
 	
-	protected String fieldName;
+	private String fieldName;
+	private T fieldType;
 	
-	public MappingField(String name) {
-		if (StringUtils.isBlank(name)) {
-			throw new RuntimeException("Field name must not empty.");
+	public MappingField(String name, T type) {
+		if (StringUtils.isBlank(name) || type == null) {
+			throw new RuntimeException("MappingField constructor parameters must not empty.");
 		}
 		this.fieldName = name;
-	}
-		
-	/**
-	 * 添加映射参数
-	 * 
-	 * @param parameter
-	 * @return
-	 * @throws FieldMappingException
-	 */
-	public final MappingField addMappingParameter(MappingParameterValue parameter) throws FieldMappingException {
-		if (!supportParameter(parameter)) {
-			throw new FieldMappingException(getName(), "Unsupported mapping parameter!");
-		}
-		for (MappingParameterValue mpv : parameterSet) {
-			if (mpv.getParameterType() == parameter.getParameterType()) {
-				throw new FieldMappingException(fieldName, "Each parameter type must not be set more than once!");
-			}
-		}		
-		parameterSet.add(parameter);
-		return this;
+		this.fieldType = type;
 	}
 	
-	public String getName() {
+	public String getPropertyName() {
 		return this.fieldName;
 	}
 	
-	/**
-	 * 创建域值
-	 * 
-	 * @param obj
-	 * @return
-	 */
-	public abstract FieldValue buildValue(Object obj) throws FieldMappingException;
+	public MappingField<?> addParameter(MappingParameterValue parameter) {
+		boolean enable = true;
+		if (!fieldType.supportParameter(parameter)) {
+			log.error("Unsupported mapping parameter {} for field {}", parameter, fieldName);
+			enable = false;
+		}
+		else {
+			for (MappingParameterValue mpv : parameterSet) {
+				if (mpv.getParameterType() == parameter.getParameterType()) {
+					log.error("Parameter {} must not be set more than once for field {}", parameter, fieldName);
+					enable = false;
+				}
+			}
+		}
+		if (enable) {
+			parameterSet.add(parameter);
+		}
+		return this;
+	}
 	
-	/**
-	 * 是否支持指定的域值类型
-	 * 
-	 * @param clazz
-	 * @return
-	 */
-	public abstract boolean supportType(Class<?> clazz);
+	public FieldValue buildFieldValue(Object value) {
+		return new FieldValue(fieldName, value);
+	}
 	
-	/**
-	 * 是否支持指定的映射参数
-	 * 
-	 * @param parameterValue
-	 * @return
-	 */
-	public abstract boolean supportParameter(MappingParameterValue parameterValue);
-
-	/**
-	 * 返回域类型名称
-	 * 
-	 * @return
-	 */
-	public abstract String getFieldType();
+	public Map<String, Object> buildJsonContext() {
+		return parseMappingField(this);
+	}
+	
+	private Map<String, Object> parseMappingField(MappingField<?> mappingField) {
+		if (mappingField == null || mappingField.fieldType == null) {
+			return null;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();		
+		map.put("type", mappingField.fieldType.getPropertyName());
+		for (MappingParameterValue parameter : mappingField.parameterSet) {
+			MappingParameterType type = parameter.getParameterType();
+			Object obj = parameter.value();
+			if (obj != null) {
+				if (obj instanceof MappingField) {
+					Map<String, Object> innerMap = parseMappingField((MappingField<?>)obj);
+					if (innerMap != null) {
+						map.put(type.getPropertyName(), innerMap);
+					}
+				}
+				else {
+					map.put(type.getPropertyName(), obj);
+				}
+			}
+		}
+		return map;
+	}
 
 }

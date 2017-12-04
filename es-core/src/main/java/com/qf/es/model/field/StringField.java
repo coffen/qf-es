@@ -1,46 +1,33 @@
 package com.qf.es.model.field;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import com.google.common.collect.Sets;
-import com.qf.es.model.FieldValue;
-import com.qf.es.model.MappingField;
+import com.qf.es.model.FieldType;
 import com.qf.es.model.MappingParameter;
-import com.qf.es.model.MappingParameter.MappingParameterType;
-import com.qf.es.model.MappingParameter.MappingParameterValue;
-import com.qf.es.model.exception.FieldMappingException;
 
-public abstract class StringField extends MappingField {
+/**
+ * 
+ * <p>
+ * Project Name: 淘客
+ * <br>
+ * Description: 字符型域
+ * <br>
+ * File Name: StringField.java
+ * <br>
+ * Copyright: Copyright (C) 2015 All Rights Reserved.
+ * <br>
+ * Company: 杭州偶尔科技有限公司
+ * <br>
+ * @author 穷奇
+ * @create time：2017年12月4日 下午8:28:51 
+ * @version: v1.0
+ *
+ */
+public abstract class StringField extends FieldType {
 	
-	private final static Set<MappingParameterType> SUPPORTED_PARAMETER = Sets.newHashSet(MappingParameter.STORE, MappingParameter.INDEX, MappingParameter.BOOST);
-	private final static Set<Class<?>> SUPPORTED_TYPE = Sets.newHashSet(String.class);
-	
-	private Map<String, StringField> fields = new HashMap<String, StringField>();
-	
-	public StringField(String name) {
-		super(name);
-	}
-
-	public FieldValue buildValue(Object obj) throws FieldMappingException {
-		if (obj instanceof String) {
-			return new FieldValue(fieldName, obj);		
-		}
-		else {
-			throw new FieldMappingException(fieldName, "Unsupported value type!");
-		}
-	}
-
-	public boolean supportType(Class<?> clazz) {
-		return SUPPORTED_TYPE.contains(clazz);
-	}
-
-	public boolean supportParameter(MappingParameterValue parameterValue) {
-		if (parameterValue == null) {
-			return false;
-		}
-		return SUPPORTED_PARAMETER.contains(parameterValue.getParameterType());
+	static {
+		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
+		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
+		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
+		SUPPORTED_PARAMETER.add(MappingParameter.FIELDS);
 	}
 
 }

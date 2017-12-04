@@ -3,7 +3,7 @@ package com.qf.es.model;
 /**
  * 
  * <p>
- * Project Name: C2C商城
+ * Project Name: 淘客
  * <br>
  * Description: ES模板
  * <br>
