@@ -51,9 +51,17 @@ public class IndexTest extends BaseUnit {
 	}
 	
 	@Test
-	public void indexData() {
+	public void indexDataAutomatic() {
 		IndexRequestBuilder builder = transportClient.prepareIndex("test", "user", "1");
 		builder.setSource("name", "李可夫", "weight", 168);
+		IndexResponse response = builder.execute().actionGet();
+		log.error(JSON.toJSONString(response));
+	}
+	
+	@Test
+	public void indexDataByMapping() {
+		IndexRequestBuilder builder = transportClient.prepareIndex("test", "testType", "1");
+		builder.setSource("testField", "中华人民共和国");
 		IndexResponse response = builder.execute().actionGet();
 		log.error(JSON.toJSONString(response));
 	}
