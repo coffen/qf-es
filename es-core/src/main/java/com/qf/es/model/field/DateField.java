@@ -1,6 +1,6 @@
 package com.qf.es.model.field;
 
-import com.qf.es.model.FieldType;
+import com.qf.es.model.Field;
 import com.qf.es.model.MappingParameter;
 
 /**
@@ -21,13 +21,17 @@ import com.qf.es.model.MappingParameter;
  * @version: v1.0
  *
  */
-public final class DateField extends FieldType {	
+public final class DateField extends Field {	
 	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
 		SUPPORTED_PARAMETER.add(MappingParameter.FORMAT);		
+	}
+	
+	public DateField(String name) {
+		super(name);
 	}
 
 	@Override

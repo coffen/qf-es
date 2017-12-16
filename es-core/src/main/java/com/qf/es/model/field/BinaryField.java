@@ -1,6 +1,6 @@
 package com.qf.es.model.field;
 
-import com.qf.es.model.FieldType;
+import com.qf.es.model.Field;
 import com.qf.es.model.MappingParameter;
 
 /**
@@ -21,10 +21,14 @@ import com.qf.es.model.MappingParameter;
  * @version: v1.0
  *
  */
-public final class BinaryField extends FieldType {
+public final class BinaryField extends Field {
 	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
+	}
+	
+	public BinaryField(String name) {
+		super(name);
 	}
 
 	@Override

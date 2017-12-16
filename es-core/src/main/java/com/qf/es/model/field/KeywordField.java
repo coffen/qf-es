@@ -19,6 +19,10 @@ package com.qf.es.model.field;
  *
  */
 public final class KeywordField extends StringField {
+	
+	public KeywordField(String name) {
+		super(name);
+	}
 
 	@Override
 	public String getPropertyName() {

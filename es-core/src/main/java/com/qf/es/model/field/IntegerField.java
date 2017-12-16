@@ -19,6 +19,10 @@ package com.qf.es.model.field;
  *
  */
 public final class IntegerField extends NumbericField {
+	
+	public IntegerField(String name) {
+		super(name);
+	}
 
 	@Override
 	public String getPropertyName() {

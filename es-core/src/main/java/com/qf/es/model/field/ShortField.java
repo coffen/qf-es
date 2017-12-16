@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class ShortField extends NumbericField {
 	
+	public ShortField(String name) {
+		super(name);
+	}
+	
 	@Override
 	public String getPropertyName() {
 		return "short";

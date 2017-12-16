@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class DoubleField extends NumbericField {
 	
+	public DoubleField(String name) {
+		super(name);
+	}
+	
 	@Override
 	public String getPropertyName() {
 		return "double";

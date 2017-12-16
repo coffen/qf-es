@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Mapping {
 	
 	private String typeName;
-	private Map<String, MappingField<?>> fieldMap = new HashMap<String, MappingField<?>>();
+	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
 	
 	public Mapping(String typeName) {
 		if (StringUtils.isBlank(typeName)) {
@@ -39,7 +39,7 @@ public class Mapping {
 		return typeName;
 	}
 	
-	public boolean addField(MappingField<?> field) {
+	public boolean addField(MappingField field) {
 		if (field == null || StringUtils.isBlank(field.getPropertyName())) {
 			return false;
 		}
@@ -51,7 +51,7 @@ public class Mapping {
 		return !contains;
 	}
 	
-	public MappingField<?> getField(String propertyName) {
+	public MappingField getField(String propertyName) {
 		return fieldMap.get(propertyName);
 	}
 

@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class LongField extends NumbericField {
 	
+	public LongField(String name) {
+		super(name);
+	}
+	
 	@Override
 	public String getPropertyName() {
 		return "long";

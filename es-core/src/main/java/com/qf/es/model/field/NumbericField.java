@@ -1,6 +1,6 @@
 package com.qf.es.model.field;
 
-import com.qf.es.model.FieldType;
+import com.qf.es.model.Field;
 import com.qf.es.model.MappingParameter;
 
 /**
@@ -21,7 +21,11 @@ import com.qf.es.model.MappingParameter;
  * @version: v1.0
  *
  */
-public abstract class NumbericField extends FieldType {
+public abstract class NumbericField extends Field {
+	
+	public NumbericField(String name) {
+		super(name);
+	}
 	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);

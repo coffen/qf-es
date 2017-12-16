@@ -3,6 +3,8 @@ package com.qf.es.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.qf.es.model.MappingParameter.MappingParameterType;
 import com.qf.es.model.MappingParameter.MappingParameterValue;
 
@@ -13,7 +15,7 @@ import com.qf.es.model.MappingParameter.MappingParameterValue;
  * <br>
  * Description: 域设置
  * <br>
- * File Name: FieldSetting.java
+ * File Name: Field.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
@@ -24,9 +26,22 @@ import com.qf.es.model.MappingParameter.MappingParameterValue;
  * @version: v1.0
  *
  */
-public abstract class FieldType implements Setting {
+public abstract class Field implements Setting {
 	
 	protected final static Set<MappingParameterType> SUPPORTED_PARAMETER = new HashSet<MappingParameterType>();
+	
+	private String fieldName;
+	
+	public Field(String name) {
+		if (StringUtils.isBlank(name)) {
+			throw new RuntimeException("Field name must not empty.");
+		}
+		this.fieldName = name;
+	}
+	
+	public String getName() {
+		return fieldName;
+	}
 	
 	/**
 	 * 是否支持指定的映射参数
@@ -34,7 +49,7 @@ public abstract class FieldType implements Setting {
 	 * @param parameterValue
 	 * @return
 	 */
-	public boolean supportParameter(MappingParameterValue parameterValue) {
+	public final boolean supportParameter(MappingParameterValue parameterValue) {
 		if (parameterValue == null) {
 			return false;
 		}

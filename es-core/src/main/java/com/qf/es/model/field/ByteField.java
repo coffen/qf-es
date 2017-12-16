@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class ByteField extends NumbericField {
 	
+	public ByteField(String name) {
+		super(name);
+	}
+	
 	@Override
 	public String getPropertyName() {
 		return "byte";

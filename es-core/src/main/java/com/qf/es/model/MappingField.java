@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,37 +29,35 @@ import com.qf.es.model.MappingParameter.MappingParameterValue;
  * @version: v1.0
  *
  */
-public class MappingField<T extends FieldType> implements Setting {
+public class MappingField implements Setting {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	private final Set<MappingParameterValue> parameterSet = new HashSet<MappingParameterValue>();
 	
-	private String fieldName;
-	private T fieldType;
+	private final Field field;
 	
-	public MappingField(String name, T type) {
-		if (StringUtils.isBlank(name) || type == null) {
-			throw new RuntimeException("MappingField constructor parameters must not empty.");
+	public MappingField(Field field) {
+		if (field == null) {
+			throw new RuntimeException("Field must not empty.");
 		}
-		this.fieldName = name;
-		this.fieldType = type;
+		this.field = field;
 	}
 	
 	public String getPropertyName() {
-		return this.fieldName;
+		return field.getName();
 	}
 	
-	public MappingField<?> addParameter(MappingParameterValue parameter) {
+	public MappingField addParameter(MappingParameterValue parameter) {
 		boolean enable = true;
-		if (!fieldType.supportParameter(parameter)) {
-			log.error("Unsupported mapping parameter {} for field {}", parameter, fieldName);
+		if (!field.supportParameter(parameter)) {
+			log.error("Unsupported mapping parameter {} for field {}", parameter, field.getName());
 			enable = false;
 		}
 		else {
 			for (MappingParameterValue mpv : parameterSet) {
 				if (mpv.getParameterType() == parameter.getParameterType()) {
-					log.error("Parameter {} must not be set more than once for field {}", parameter, fieldName);
+					log.error("Parameter {} must not be set more than once for field {}", parameter, field.getName());
 					enable = false;
 				}
 			}
@@ -72,25 +69,25 @@ public class MappingField<T extends FieldType> implements Setting {
 	}
 	
 	public FieldValue buildFieldValue(Object value) {
-		return new FieldValue(fieldName, value);
+		return new FieldValue(field.getName(), value);
 	}
 	
 	public Map<String, Object> buildJsonContext() {
 		return parseMappingField(this);
 	}
 	
-	private Map<String, Object> parseMappingField(MappingField<?> mappingField) {
-		if (mappingField == null || mappingField.fieldType == null) {
+	private Map<String, Object> parseMappingField(MappingField mappingField) {
+		if (mappingField == null || mappingField.field == null) {
 			return null;
 		}
 		Map<String, Object> map = new HashMap<String, Object>();		
-		map.put("type", mappingField.fieldType.getPropertyName());
+		map.put("type", mappingField.field.getPropertyName());
 		for (MappingParameterValue parameter : mappingField.parameterSet) {
 			MappingParameterType type = parameter.getParameterType();
 			Object obj = parameter.value();
 			if (obj != null) {
 				if (obj instanceof MappingField) {
-					Map<String, Object> innerMap = parseMappingField((MappingField<?>)obj);
+					Map<String, Object> innerMap = parseMappingField((MappingField)obj);
 					if (innerMap != null) {
 						map.put(type.getPropertyName(), innerMap);
 					}

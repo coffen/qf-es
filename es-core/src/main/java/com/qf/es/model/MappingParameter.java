@@ -1,7 +1,5 @@
 package com.qf.es.model;
 
-import com.qf.es.model.field.StringField;
-
 /**
  * 
  * <p>
@@ -116,7 +114,7 @@ public class MappingParameter {
 			return "fields";
 		}
 		
-		public MappingParameterValue value(MappingField<? extends StringField> value) {
+		public MappingParameterValue value(MappingField value) {
 			return new MappingParameterValue(this, value);
 		}
 		

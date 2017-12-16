@@ -1,5 +1,7 @@
 package com.qf.es.model.field;
 
+import com.qf.es.model.MappingParameter;
+
 /**
  * 
  * <p>
@@ -19,6 +21,14 @@ package com.qf.es.model.field;
  *
  */
 public final class TextField extends StringField {
+	
+	static {
+		SUPPORTED_PARAMETER.add(MappingParameter.ANALYZER);
+	}
+	
+	public TextField(String name) {
+		super(name);
+	}
 
 	@Override
 	public String getPropertyName() {

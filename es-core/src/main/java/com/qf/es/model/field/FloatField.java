@@ -19,6 +19,10 @@ package com.qf.es.model.field;
  *
  */
 public final class FloatField extends NumbericField {
+	
+	public FloatField(String name) {
+		super(name);
+	}
 
 	@Override
 	public String getPropertyName() {
