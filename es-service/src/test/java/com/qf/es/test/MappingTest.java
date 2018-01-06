@@ -1,7 +1,6 @@
 package com.qf.es.test;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSON;
 import com.qf.es.model.MappingField;
 import com.qf.es.model.MappingParameter;
+import com.qf.es.model.MappingType;
 import com.qf.es.model.field.DateField;
 import com.qf.es.model.field.ShortField;
 import com.qf.es.model.field.TextField;
@@ -39,29 +39,27 @@ public class MappingTest extends BaseUnit {
 		IndicesAdminClient client = transportClient.admin().indices();		
 		PutMappingRequestBuilder putBuilder = client.preparePutMapping("test");
 		
+		MappingType testType = new MappingType("testType");
+		
 		MappingField mf1 = new MappingField(new TextField("name"));
 		mf1	.addParameter(MappingParameter.STORE.TRUE)
  		 	.addParameter(MappingParameter.ANALYZER.ENGLISH)
  		 	.addParameter(MappingParameter.INDEX.TRUE)
  		 	.addParameter(MappingParameter.BOOST.value(2.0f));
+		testType.addField(mf1);
 		
 		MappingField mf2 = new MappingField(new DateField("birthday"));
 		mf2	.addParameter(MappingParameter.STORE.TRUE)
  		 	.addParameter(MappingParameter.INDEX.TRUE)
  		 	.addParameter(MappingParameter.FORMAT.value("yyyy-MM-dd HH:mm:ss"));
+		testType.addField(mf2);
 		
 		MappingField mf3 = new MappingField(new ShortField("weight"));
 		mf3	.addParameter(MappingParameter.STORE.TRUE)
  		 	.addParameter(MappingParameter.INDEX.TRUE);
+		testType.addField(mf3);
 		
-		Map<String, Object> map = new HashMap<>();
-		Map<String, Object> properties = new HashMap<>();
-		properties.put(mf1.getPropertyName(), mf1.buildJsonContext());
-		properties.put(mf2.getPropertyName(), mf2.buildJsonContext());
-		properties.put(mf3.getPropertyName(), mf3.buildJsonContext());
-		map.put("properties", properties);
-		
-		putBuilder.setType("testType").setSource(map);
+		putBuilder.setType("testType11").setSource(testType.buildSetting());
 		ActionFuture<PutMappingResponse> putFuture = putBuilder.execute();
 		
 		PutMappingResponse putResponse = putFuture.get();

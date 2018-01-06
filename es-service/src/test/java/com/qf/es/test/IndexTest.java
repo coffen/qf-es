@@ -37,8 +37,8 @@ public class IndexTest extends BaseUnit {
 	
 	@Test
 	public void indexDataAutomatic() {
-		IndexRequestBuilder builder = transportClient.prepareIndex("test", "testType", "1");
-		builder.setSource("name", "Richard Lee", "weight", (short)168, "birthday", "1979-05-24");
+		IndexRequestBuilder builder = transportClient.prepareIndex("test", "testType", "2");
+		builder.setSource("name", "穷奇", "weight", (short)168, "birthday", "1979-05-24 00:00:00");
 		IndexResponse response = builder.execute().actionGet();
 		log.error(JSON.toJSONString(response.getResult()));
 	}

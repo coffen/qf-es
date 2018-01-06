@@ -44,27 +44,24 @@ public class MappingField implements Setting {
 		this.field = field;
 	}
 	
-	public String getPropertyName() {
+	public String getFieldName() {
 		return field.getName();
 	}
 	
 	public MappingField addParameter(MappingParameterValue parameter) {
-		boolean enable = true;
 		if (!field.supportParameter(parameter)) {
 			log.error("Unsupported mapping parameter {} for field {}", parameter, field.getName());
-			enable = false;
+			throw new RuntimeException("Unsupported mapping parameter");
 		}
 		else {
 			for (MappingParameterValue mpv : parameterSet) {
 				if (mpv.getParameterType() == parameter.getParameterType()) {
 					log.error("Parameter {} must not be set more than once for field {}", parameter, field.getName());
-					enable = false;
+					throw new RuntimeException("Duplicate parameter setting");
 				}
 			}
 		}
-		if (enable) {
-			parameterSet.add(parameter);
-		}
+		parameterSet.add(parameter);
 		return this;
 	}
 	
@@ -72,11 +69,11 @@ public class MappingField implements Setting {
 		return new FieldValue(field.getName(), value);
 	}
 	
-	public Map<String, Object> buildJsonContext() {
-		return parseMappingField(this);
+	public Map<String, Object> buildSetting() {
+		return parse(this);
 	}
 	
-	private Map<String, Object> parseMappingField(MappingField mappingField) {
+	private Map<String, Object> parse(MappingField mappingField) {
 		if (mappingField == null || mappingField.field == null) {
 			return null;
 		}
@@ -87,7 +84,7 @@ public class MappingField implements Setting {
 			Object obj = parameter.value();
 			if (obj != null) {
 				if (obj instanceof MappingField) {
-					Map<String, Object> innerMap = parseMappingField((MappingField)obj);
+					Map<String, Object> innerMap = parse((MappingField)obj);
 					if (innerMap != null) {
 						map.put(type.getPropertyName(), innerMap);
 					}
@@ -98,6 +95,11 @@ public class MappingField implements Setting {
 			}
 		}
 		return map;
+	}
+	
+	@Override
+	public String getPropertyName() {
+		return field.getName();
 	}
 
 }

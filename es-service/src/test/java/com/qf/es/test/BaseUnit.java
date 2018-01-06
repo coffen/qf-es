@@ -9,7 +9,7 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRespon
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
-import org.junit.Test;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class BaseUnit extends AbstractJUnit4SpringContextTests {
 	@Autowired
 	private TransportClient transportClient;
 	
-    @Test
+    @Before
 	public void buildIndex() throws InterruptedException, ExecutionException { 	
     	String indexName = "test";
     	

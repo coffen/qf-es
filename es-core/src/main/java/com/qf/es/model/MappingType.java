@@ -4,15 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
  * <p>
  * Project Name: 淘客
  * <br>
- * Description: 映射
+ * Description: 映射类型
  * <br>
- * File Name: Mapping.java
+ * File Name: MappingType.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
@@ -23,12 +25,14 @@ import org.apache.commons.lang3.StringUtils;
  * @version: v1.0
  *
  */
-public class Mapping {
+public class MappingType implements Setting {
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	private String typeName;
 	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
 	
-	public Mapping(String typeName) {
+	public MappingType(String typeName) {
 		if (StringUtils.isBlank(typeName)) {
 			throw new RuntimeException("Mapping constructor parameters must not empty.");
 		}
@@ -53,6 +57,32 @@ public class Mapping {
 	
 	public MappingField getField(String propertyName) {
 		return fieldMap.get(propertyName);
+	}
+	
+	public Map<String, Object> buildSetting() {
+		return parse(this);
+	}
+	
+	private Map<String, Object> parse(MappingType mappingType) {
+		if (mappingType == null || fieldMap.size() == 0) {
+			log.error("Mapping type must contains at least one mapping field");
+			return null;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<String, Object>();
+		map.put("properties", properties);
+		for (MappingField field : fieldMap.values()) {
+			Map<String, Object> fieldSetting = field.buildSetting();
+			if (fieldSetting != null) {
+				properties.put(field.getPropertyName(), fieldSetting);
+			}
+		}
+		return map;
+	}
+	
+	@Override
+	public String getPropertyName() {
+		return typeName;
 	}
 
 }
