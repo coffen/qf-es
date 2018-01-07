@@ -77,7 +77,7 @@ public class MappingField implements Setting {
 		if (mappingField == null || mappingField.field == null) {
 			return null;
 		}
-		Map<String, Object> map = new HashMap<String, Object>();		
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", mappingField.field.getPropertyName());
 		for (MappingParameterValue parameter : mappingField.parameterSet) {
 			MappingParameterType type = parameter.getParameterType();
