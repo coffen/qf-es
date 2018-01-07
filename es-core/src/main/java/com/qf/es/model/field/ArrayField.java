@@ -8,24 +8,24 @@ import com.qf.es.model.MappingType;
  * <p>
  * Project Name: 淘客
  * <br>
- * Description: 对象Field
+ * Description: Object数组Field
  * <br>
- * File Name: ObjectField.java
+ * File Name: ArrayField.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
  * Company: 杭州偶尔科技有限公司
  * <br>
  * @author 穷奇
- * @create time：2018年1月7日 下午3:54:13 
+ * @create time：2018年1月7日 下午3:55:55 
  * @version: v1.0
  *
  */
-public class ObjectField extends Field {
-
+public class ArrayField extends Field {
+	
 	private MappingType type;
 
-	public ObjectField(String name, MappingType type) {
+	public ArrayField(String name, MappingType type) {
 		super(name);
 		if (type == null) {
 			throw new RuntimeException("MappingType must not empty.");
@@ -39,7 +39,7 @@ public class ObjectField extends Field {
 
 	@Override
 	public String getPropertyName() {
-		return getName();
+		return "nested";
 	}
 
 }

@@ -23,15 +23,15 @@ import com.qf.es.model.MappingParameter;
  */
 public abstract class StringField extends Field {
 	
-	public StringField(String name) {
-		super(name);
-	}
-	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
 		SUPPORTED_PARAMETER.add(MappingParameter.FIELDS);
+	}
+	
+	public StringField(String name) {
+		super(name);
 	}
 
 }

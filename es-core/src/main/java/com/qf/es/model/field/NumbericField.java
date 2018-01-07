@@ -23,14 +23,14 @@ import com.qf.es.model.MappingParameter;
  */
 public abstract class NumbericField extends Field {
 	
-	public NumbericField(String name) {
-		super(name);
-	}
-	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
+	}
+	
+	public NumbericField(String name) {
+		super(name);
 	}
 	
 }

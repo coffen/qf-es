@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.qf.es.model.MappingParameter.MappingParameterType;
 import com.qf.es.model.MappingParameter.MappingParameterValue;
+import com.qf.es.model.field.ObjectField;
 
 /**
  * 
@@ -78,19 +79,25 @@ public class MappingField implements Setting {
 			return null;
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", mappingField.field.getPropertyName());
-		for (MappingParameterValue parameter : mappingField.parameterSet) {
-			MappingParameterType type = parameter.getParameterType();
-			Object obj = parameter.value();
-			if (obj != null) {
-				if (obj instanceof MappingField) {
-					Map<String, Object> innerMap = parse((MappingField)obj);
-					if (innerMap != null) {
-						map.put(type.getPropertyName(), innerMap);
+		if (mappingField.field instanceof ObjectField) {
+			ObjectField objField = (ObjectField)mappingField.field;
+			map = objField.getType().buildSetting();
+		}
+		else {
+			map.put("type", mappingField.field.getPropertyName());
+			for (MappingParameterValue parameter : mappingField.parameterSet) {
+				MappingParameterType type = parameter.getParameterType();
+				Object obj = parameter.value();
+				if (obj != null) {
+					if (obj instanceof MappingField) {
+						Map<String, Object> innerMap = parse((MappingField)obj);
+						if (innerMap != null) {
+							map.put(type.getPropertyName(), innerMap);
+						}
 					}
-				}
-				else {
-					map.put(type.getPropertyName(), obj);
+					else {
+						map.put(type.getPropertyName(), obj);
+					}
 				}
 			}
 		}
