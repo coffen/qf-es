@@ -10,7 +10,7 @@ import com.qf.es.model.MappingType;
  * <br>
  * Description: Object数组Field
  * <br>
- * File Name: ArrayField.java
+ * File Name: NestedField.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
@@ -21,11 +21,11 @@ import com.qf.es.model.MappingType;
  * @version: v1.0
  *
  */
-public class ArrayField extends Field {
+public final class NestedField extends Field {
 	
 	private MappingType type;
 
-	public ArrayField(String name, MappingType type) {
+	public NestedField(String name, MappingType type) {
 		super(name);
 		if (type == null) {
 			throw new RuntimeException("MappingType must not empty.");

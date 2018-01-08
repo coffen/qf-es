@@ -1,15 +1,21 @@
 package com.qf.es.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.qf.es.model.MappingParameter.MappingParameterType;
 import com.qf.es.model.MappingParameter.MappingParameterValue;
+import com.qf.es.model.field.JoinField;
+import com.qf.es.model.field.NestedField;
 import com.qf.es.model.field.ObjectField;
 
 /**
@@ -38,6 +44,8 @@ public class MappingField implements Setting {
 	
 	private final Field field;
 	
+	private List<String> copyTo = new ArrayList<String>();
+	
 	public MappingField(Field field) {
 		if (field == null) {
 			throw new RuntimeException("Field must not empty.");
@@ -47,6 +55,14 @@ public class MappingField implements Setting {
 	
 	public String getFieldName() {
 		return field.getName();
+	}
+	
+	public List<String> getCopyTo() {
+		return Collections.unmodifiableList(copyTo);
+	}
+	
+	public void setCopyTo(List<String> copyTo) {
+		this.copyTo = copyTo;
 	}
 	
 	public MappingField addParameter(MappingParameterValue parameter) {
@@ -83,8 +99,21 @@ public class MappingField implements Setting {
 			ObjectField objField = (ObjectField)mappingField.field;
 			map = objField.getType().buildSetting();
 		}
+		else if (mappingField.field instanceof NestedField) {
+			NestedField arrField = (NestedField)mappingField.field;
+			map = arrField.getType().buildSetting();
+			map.put("type", mappingField.field.getPropertyName());
+		}
+		else if (mappingField.field instanceof JoinField) {
+			JoinField joinField = (JoinField)mappingField.field;
+			map.put("type", mappingField.field.getPropertyName());
+			map.put("relations", joinField.getRelations());
+		}
 		else {
 			map.put("type", mappingField.field.getPropertyName());
+			if (CollectionUtils.isNotEmpty(mappingField.getCopyTo())) {
+				map.put("copy_to", mappingField.getCopyTo());
+			}
 			for (MappingParameterValue parameter : mappingField.parameterSet) {
 				MappingParameterType type = parameter.getParameterType();
 				Object obj = parameter.value();

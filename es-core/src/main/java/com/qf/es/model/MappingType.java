@@ -32,6 +32,10 @@ public class MappingType implements Setting {
 	private String typeName;
 	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
 	
+	private boolean enableAll;
+	private boolean enableSource;
+	private boolean enableFieldNames;
+	
 	public MappingType(String typeName) {
 		if (StringUtils.isBlank(typeName)) {
 			throw new RuntimeException("Mapping constructor parameters must not empty.");
@@ -41,6 +45,30 @@ public class MappingType implements Setting {
 	
 	public String getTypeName() {
 		return typeName;
+	}
+	
+	public void setEnableAll(boolean enableAll) {
+		this.enableAll = enableAll;
+	}
+	
+	public boolean isEnableAll() {
+		return enableAll;
+	}
+	
+	public void setEnableSource(boolean enableSource) {
+		this.enableSource = enableSource;
+	}
+	
+	public boolean isEnableSource() {
+		return enableSource;
+	}
+	
+	public void setEnableFieldNames(boolean enableFieldNames) {
+		this.enableFieldNames = enableFieldNames;
+	}
+	
+	public boolean isEnableFieldNames() {
+		return enableFieldNames;
 	}
 	
 	public boolean addField(MappingField field) {

@@ -21,7 +21,7 @@ import com.qf.es.model.MappingType;
  * @version: v1.0
  *
  */
-public class ObjectField extends Field {
+public final class ObjectField extends Field {
 
 	private MappingType type;
 
