@@ -1,14 +1,10 @@
 package com.qf.es.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +40,6 @@ public class MappingField implements Setting {
 	
 	private final Field field;
 	
-	private List<String> copyTo = new ArrayList<String>();
-	
 	public MappingField(Field field) {
 		if (field == null) {
 			throw new RuntimeException("Field must not empty.");
@@ -55,14 +49,6 @@ public class MappingField implements Setting {
 	
 	public String getFieldName() {
 		return field.getName();
-	}
-	
-	public List<String> getCopyTo() {
-		return Collections.unmodifiableList(copyTo);
-	}
-	
-	public void setCopyTo(List<String> copyTo) {
-		this.copyTo = copyTo;
 	}
 	
 	public MappingField addParameter(MappingParameterValue parameter) {
@@ -111,9 +97,6 @@ public class MappingField implements Setting {
 		}
 		else {
 			map.put("type", mappingField.field.getPropertyName());
-			if (CollectionUtils.isNotEmpty(mappingField.getCopyTo())) {
-				map.put("copy_to", mappingField.getCopyTo());
-			}
 			for (MappingParameterValue parameter : mappingField.parameterSet) {
 				MappingParameterType type = parameter.getParameterType();
 				Object obj = parameter.value();

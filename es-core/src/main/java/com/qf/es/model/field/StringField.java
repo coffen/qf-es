@@ -28,6 +28,7 @@ public abstract class StringField extends Field {
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
 		SUPPORTED_PARAMETER.add(MappingParameter.FIELDS);
+		SUPPORTED_PARAMETER.add(MappingParameter.COPY_TO);
 	}
 	
 	public StringField(String name) {

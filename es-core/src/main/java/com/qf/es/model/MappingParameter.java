@@ -1,5 +1,7 @@
 package com.qf.es.model;
 
+import java.util.List;
+
 /**
  * 
  * <p>
@@ -23,10 +25,16 @@ public class MappingParameter {
 	private static MappingParameter parameter = new MappingParameter();
 	
 	public final static Analyzer ANALYZER = parameter.new Analyzer();
+	public final static Enabled ENABLED = parameter.new Enabled();
 	public final static Store STORE = parameter.new Store();
 	public final static Index INDEX = parameter.new Index();
 	public final static Boost BOOST = parameter.new Boost();
+	public final static CopyTo COPY_TO = parameter.new CopyTo();
+	public final static Coerce COERCE = parameter.new Coerce();
 	public final static Format FORMAT = parameter.new Format();
+	public final static IncludeInAll INCLUDE_IN_ALL = parameter.new IncludeInAll();
+	public final static DocValues DOC_VALUES = parameter.new DocValues();
+	public final static FieldData FIELDDATA = parameter.new FieldData();
 	public final static Fields FIELDS = parameter.new Fields();
 	
 	private MappingParameter() {};
@@ -50,6 +58,19 @@ public class MappingParameter {
 		public MappingParameterValue IK_MAX_WORD = new MappingParameterValue(this, "ik_max_word");
 		public MappingParameterValue FINGERPRINT = new MappingParameterValue(this, "fingerprint");
 
+	}
+	
+	public class Enabled extends MappingParameterType {
+		
+		private Enabled() {};
+		
+		public String getPropertyName() {
+			return "enabled";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
+		
 	}
 	
 	public class Store extends MappingParameterType {
@@ -89,6 +110,72 @@ public class MappingParameter {
 		public MappingParameterValue value(Float value) {
 			return new MappingParameterValue(this, value);
 		}
+		
+	}
+	
+	public class IncludeInAll extends MappingParameterType {
+
+		private IncludeInAll() {};
+		
+		public String getPropertyName() {
+			return "include_in_all";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
+		
+	}
+	
+	public class DocValues extends MappingParameterType {
+
+		private DocValues() {};
+		
+		public String getPropertyName() {
+			return "doc_values";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
+		
+	}
+	
+	public class FieldData extends MappingParameterType {
+
+		private FieldData() {};
+		
+		public String getPropertyName() {
+			return "fielddata";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
+		
+	}
+	
+	public class CopyTo extends MappingParameterType {
+
+		private CopyTo() {};
+		
+		public String getPropertyName() {
+			return "copy_to";
+		}
+		
+		public MappingParameterValue value(List<String> value) {
+			return new MappingParameterValue(this, value);
+		}
+		
+	}
+	
+	public class Coerce extends MappingParameterType {
+
+		private Coerce() {};
+		
+		public String getPropertyName() {
+			return "coerce";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
 		
 	}
 	
