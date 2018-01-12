@@ -27,6 +27,11 @@ public abstract class NumbericField extends Field {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
+		SUPPORTED_PARAMETER.add(MappingParameter.COERCE);
+		SUPPORTED_PARAMETER.add(MappingParameter.DOC_VALUES);
+		SUPPORTED_PARAMETER.add(MappingParameter.IGNORE_MALFORMED);
+		SUPPORTED_PARAMETER.add(MappingParameter.INCLUDE_IN_ALL);
+		SUPPORTED_PARAMETER.add(MappingParameter.NULL_VALUE);
 	}
 	
 	public NumbericField(String name) {

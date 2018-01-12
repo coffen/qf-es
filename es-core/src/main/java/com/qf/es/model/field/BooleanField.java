@@ -27,6 +27,8 @@ public final class BooleanField extends Field {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
+		SUPPORTED_PARAMETER.add(MappingParameter.NULL_VALUE);
+		SUPPORTED_PARAMETER.add(MappingParameter.DOC_VALUES);
 	}
 	
 	public BooleanField(String name) {

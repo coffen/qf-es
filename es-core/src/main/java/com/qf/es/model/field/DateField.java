@@ -27,7 +27,11 @@ public final class DateField extends Field {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
-		SUPPORTED_PARAMETER.add(MappingParameter.FORMAT);		
+		SUPPORTED_PARAMETER.add(MappingParameter.FORMAT);
+		SUPPORTED_PARAMETER.add(MappingParameter.DOC_VALUES);
+		SUPPORTED_PARAMETER.add(MappingParameter.INCLUDE_IN_ALL);
+		SUPPORTED_PARAMETER.add(MappingParameter.NULL_VALUE);
+		SUPPORTED_PARAMETER.add(MappingParameter.IGNORE_MALFORMED);
 	}
 	
 	public DateField(String name) {

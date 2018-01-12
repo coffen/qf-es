@@ -25,6 +25,7 @@ public final class BinaryField extends Field {
 	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
+		SUPPORTED_PARAMETER.add(MappingParameter.DOC_VALUES);
 	}
 	
 	public BinaryField(String name) {

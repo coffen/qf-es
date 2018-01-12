@@ -1,6 +1,7 @@
 package com.qf.es.model.field;
 
 import com.qf.es.model.Field;
+import com.qf.es.model.MappingParameter;
 import com.qf.es.model.MappingType;
 
 /**
@@ -22,6 +23,11 @@ import com.qf.es.model.MappingType;
  *
  */
 public final class NestedField extends Field {
+	
+	static {
+		SUPPORTED_PARAMETER.add(MappingParameter.DYNAMIC);
+		SUPPORTED_PARAMETER.add(MappingParameter.INCLUDE_IN_ALL);
+	}
 	
 	private MappingType type;
 

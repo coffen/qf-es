@@ -24,6 +24,12 @@ public final class TextField extends StringField {
 	
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.ANALYZER);
+		SUPPORTED_PARAMETER.add(MappingParameter.SEARCH_ANALYZER);
+		SUPPORTED_PARAMETER.add(MappingParameter.FIELDDATA);
+		SUPPORTED_PARAMETER.add(MappingParameter.FIELDDATA_FREQUENCY_FILTER);
+		SUPPORTED_PARAMETER.add(MappingParameter.POSITION_INCREMENT_GAP);
+		SUPPORTED_PARAMETER.add(MappingParameter.TERM_VECTOR);
+		SUPPORTED_PARAMETER.add(MappingParameter.SIMILARITY);
 	}
 	
 	public TextField(String name) {

@@ -26,9 +26,15 @@ public abstract class StringField extends Field {
 	static {
 		SUPPORTED_PARAMETER.add(MappingParameter.STORE);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX);
+		SUPPORTED_PARAMETER.add(MappingParameter.INDEX_OPTIONS);
+		SUPPORTED_PARAMETER.add(MappingParameter.NORMS);
 		SUPPORTED_PARAMETER.add(MappingParameter.BOOST);
 		SUPPORTED_PARAMETER.add(MappingParameter.FIELDS);
-		SUPPORTED_PARAMETER.add(MappingParameter.COPY_TO);
+		SUPPORTED_PARAMETER.add(MappingParameter.DOC_VALUES);
+		SUPPORTED_PARAMETER.add(MappingParameter.IGNORE_ABOVE);
+		SUPPORTED_PARAMETER.add(MappingParameter.INCLUDE_IN_ALL);
+		SUPPORTED_PARAMETER.add(MappingParameter.NULL_VALUE);
+		SUPPORTED_PARAMETER.add(MappingParameter.SIMILARITY);
 	}
 	
 	public StringField(String name) {
