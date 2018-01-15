@@ -1,11 +1,5 @@
 package com.qf.es.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.qf.es.model.MappingParameter.MappingParameterType;
-import com.qf.es.model.MappingParameter.MappingParameterValue;
-
 /**
  * 
  * <p>
@@ -24,21 +18,14 @@ import com.qf.es.model.MappingParameter.MappingParameterValue;
  * @version: v1.0
  *
  */
-public abstract class MetaField implements Setting {
+public abstract class MetaField extends Field {
 	
-	protected final static Set<MappingParameterType> SUPPORTED_PARAMETER = new HashSet<MappingParameterType>();
-	
-	/**
-	 * 是否支持指定的映射参数
-	 * 
-	 * @param parameterValue
-	 * @return
-	 */
-	public final boolean supportParameter(MappingParameterValue parameterValue) {
-		if (parameterValue == null) {
-			return false;
-		}
-		return SUPPORTED_PARAMETER.contains(parameterValue.getParameterType());
+	public MetaField() {
+		this("META");
+	}
+
+	private MetaField(String name) {
+		super(name);
 	}
 
 }
