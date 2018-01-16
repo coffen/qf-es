@@ -59,7 +59,7 @@ public class MappingTest extends BaseUnit {
  		 	.addParameter(MappingParameter.INDEX.TRUE);
 		testType.addField(mf3);
 		
-		putBuilder.setType("testType11").setSource(testType.buildSetting());
+		putBuilder.setType("testType11").setSource(testType.buildSetting(null));
 		ActionFuture<PutMappingResponse> putFuture = putBuilder.execute();
 		
 		PutMappingResponse putResponse = putFuture.get();

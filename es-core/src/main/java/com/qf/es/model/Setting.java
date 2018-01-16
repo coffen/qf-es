@@ -1,5 +1,7 @@
 package com.qf.es.model;
 
+import java.util.Map;
+
 /**
  * 
  * <p>
@@ -26,5 +28,12 @@ public interface Setting {
 	 * @return
 	 */
 	String getPropertyName();
+	
+	/**
+	 * 创建索引参数配置
+	 * 
+	 * @return
+	 */
+	Map<String, Object> buildSetting(Value value);
 
 }

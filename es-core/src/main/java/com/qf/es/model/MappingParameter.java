@@ -239,7 +239,7 @@ public class MappingParameter {
 		
 		public MappingParameterValue value(float min, float max, int minSegment) {
 			return new MappingParameterValue(this, min, max, minSegment) {
-				public Object value() {
+				public Object getValue() {
 					Map<String, Object> params = new HashMap<String, Object>();
 					params.put("min", min);
 					params.put("max", min);
@@ -393,10 +393,18 @@ public class MappingParameter {
 	public abstract class MappingParameterType implements Setting {
 				
 		private MappingParameterType() {}
+		
+		public Map<String, Object> buildSetting(Value object) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (object != null) {
+				map.put(getPropertyName(), object.getValue());
+			}
+			return map;
+		}
 
 	}
 	
-	public class MappingParameterValue {
+	public class MappingParameterValue implements Value {
 
 		private MappingParameterType parameterType;
 		private Object value;
@@ -410,7 +418,7 @@ public class MappingParameter {
 			return parameterType;
 		}
 		
-		public Object value() {
+		public Object getValue() {
 			return this.value;
 		}
 

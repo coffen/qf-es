@@ -1,6 +1,5 @@
 package com.qf.es.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -10,9 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import com.qf.es.model.MappingParameter.MappingParameterType;
 import com.qf.es.model.MappingParameter.MappingParameterValue;
-import com.qf.es.model.field.JoinField;
-import com.qf.es.model.field.NestedField;
-import com.qf.es.model.field.ObjectField;
 
 /**
  * 
@@ -72,44 +68,23 @@ public class MappingField implements Setting {
 		return new FieldValue(field.getName(), value);
 	}
 	
-	public Map<String, Object> buildSetting() {
-		return parse(this);
-	}
-	
-	private Map<String, Object> parse(MappingField mappingField) {
-		if (mappingField == null || mappingField.field == null) {
-			return null;
+	public Map<String, Object> buildSetting(Value value) {
+		Map<String, Object> map = field.buildSetting(value);
+		if (map == null || map.size() == 0) {
+			throw new RuntimeException("Field setting can not be empty");
 		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (mappingField.field instanceof ObjectField) {
-			ObjectField objField = (ObjectField)mappingField.field;
-			map = objField.getType().buildSetting();
-		}
-		else if (mappingField.field instanceof NestedField) {
-			NestedField arrField = (NestedField)mappingField.field;
-			map = arrField.getType().buildSetting();
-			map.put("type", mappingField.field.getPropertyName());
-		}
-		else if (mappingField.field instanceof JoinField) {
-			JoinField joinField = (JoinField)mappingField.field;
-			map.put("type", mappingField.field.getPropertyName());
-			map.put("relations", joinField.getRelations());
-		}
-		else {
-			map.put("type", mappingField.field.getPropertyName());
-			for (MappingParameterValue parameter : mappingField.parameterSet) {
-				MappingParameterType type = parameter.getParameterType();
-				Object obj = parameter.value();
-				if (obj != null) {
-					if (obj instanceof MappingField) {
-						Map<String, Object> innerMap = parse((MappingField)obj);
-						if (innerMap != null) {
-							map.put(type.getPropertyName(), innerMap);
-						}
+		for (MappingParameterValue parameter : parameterSet) {
+			MappingParameterType type = parameter.getParameterType();
+			Object obj = parameter.getValue();
+			if (obj != null) {
+				if (obj instanceof MappingField) {
+					Map<String, Object> innerMap = ((MappingField)obj).buildSetting(value);
+					if (innerMap != null) {
+						map.put(type.getPropertyName(), innerMap);
 					}
-					else {
-						map.put(type.getPropertyName(), obj);
-					}
+				}
+				else {
+					map.put(type.getPropertyName(), obj);
 				}
 			}
 		}

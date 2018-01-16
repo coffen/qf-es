@@ -1,7 +1,10 @@
 package com.qf.es.model.field;
 
+import java.util.Map;
+
 import com.qf.es.model.Field;
 import com.qf.es.model.MappingType;
+import com.qf.es.model.Value;
 
 /**
  * 
@@ -40,6 +43,11 @@ public final class ObjectField extends Field {
 	@Override
 	public String getPropertyName() {
 		return getName();
+	}
+	
+	@Override
+	public Map<String, Object> buildSetting(Value value) {
+		return type.buildSetting(value);
 	}
 
 }

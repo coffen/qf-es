@@ -1,6 +1,8 @@
 package com.qf.es.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +56,16 @@ public abstract class Field implements Setting {
 			return false;
 		}
 		return SUPPORTED_PARAMETER.contains(parameterValue.getParameterType());
+	}
+	
+	@Override
+	public Map<String, Object> buildSetting(Value value) {
+		if (StringUtils.isBlank(getPropertyName())) {
+			throw new RuntimeException("Field property name must not empty.");
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", getPropertyName());
+		return map;
 	}
 
 }

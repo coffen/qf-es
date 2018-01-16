@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -26,8 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MappingType implements Setting {
-	
-	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	private String typeName;
 	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
@@ -87,20 +83,12 @@ public class MappingType implements Setting {
 		return fieldMap.get(propertyName);
 	}
 	
-	public Map<String, Object> buildSetting() {
-		return parse(this);
-	}
-	
-	private Map<String, Object> parse(MappingType mappingType) {
-		if (mappingType == null || fieldMap.size() == 0) {
-			log.error("Mapping type must contains at least one mapping field");
-			return null;
-		}
+	public Map<String, Object> buildSetting(Value value) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> properties = new HashMap<String, Object>();
 		map.put("properties", properties);
 		for (MappingField field : fieldMap.values()) {
-			Map<String, Object> fieldSetting = field.buildSetting();
+			Map<String, Object> fieldSetting = field.buildSetting(value);
 			if (fieldSetting != null) {
 				properties.put(field.getPropertyName(), fieldSetting);
 			}

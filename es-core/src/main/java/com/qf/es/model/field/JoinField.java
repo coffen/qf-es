@@ -8,6 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.qf.es.model.Field;
+import com.qf.es.model.Value;
 
 /**
  * 
@@ -42,18 +43,22 @@ public final class JoinField extends Field {
 			}
 		}
 	}
-	
-	public Map<String, String> getRelations() {
-		Map<String, String> map = new HashMap<String, String>();
-		for (JoinRelation relation : relations) {
-			map.put(relation.getParent(), relation.getChild());
-		}
-		return map;
-	}
 
 	@Override
 	public String getPropertyName() {
 		return "join";
+	}
+	
+	@Override
+	public Map<String, Object> buildSetting(Value value) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", getPropertyName());
+		Map<String, String> relationMap = new HashMap<String, String>();
+		for (JoinRelation relation : relations) {
+			relationMap.put(relation.getParent(), relation.getChild());
+		}
+		map.put("relations", relationMap);
+		return map;
 	}
 
 }

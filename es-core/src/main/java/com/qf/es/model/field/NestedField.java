@@ -1,8 +1,11 @@
 package com.qf.es.model.field;
 
+import java.util.Map;
+
 import com.qf.es.model.Field;
 import com.qf.es.model.MappingParameter;
 import com.qf.es.model.MappingType;
+import com.qf.es.model.Value;
 
 /**
  * 
@@ -46,6 +49,13 @@ public final class NestedField extends Field {
 	@Override
 	public String getPropertyName() {
 		return "nested";
+	}
+	
+	@Override
+	public Map<String, Object> buildSetting(Value value) {
+		Map<String, Object> map = type.buildSetting(value);
+		map.put("type", getPropertyName());
+		return map;
 	}
 
 }
