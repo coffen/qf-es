@@ -24,11 +24,13 @@ import com.qf.es.model.MappingField;
 import com.qf.es.model.MappingParameter;
 import com.qf.es.model.MappingType;
 import com.qf.es.model.field.DateField;
+import com.qf.es.model.field.KeywordField;
 import com.qf.es.model.field.NestedField;
 import com.qf.es.model.field.ShortField;
 import com.qf.es.model.field.TextField;
 import com.qf.es.model.field.meta.AllField;
 import com.qf.es.model.field.meta.ParentField;
+import com.qf.es.model.field.meta.RoutingField;
 
 public class MappingTest extends BaseUnit {
 	
@@ -65,6 +67,11 @@ public class MappingTest extends BaseUnit {
 		
 		MappingType mappingType3 = new MappingType("mappingType3");
 		
+		MappingField mf30 = new MappingField(new KeywordField("officeId"));
+		mf30	.addParameter(MappingParameter.STORE.TRUE)
+ 		 	.addParameter(MappingParameter.INDEX.TRUE);
+		mappingType3.addField(mf30);
+		
 		MappingField mf31 = new MappingField(new TextField("name"));
 		mf31	.addParameter(MappingParameter.STORE.TRUE)
  		 	.addParameter(MappingParameter.ANALYZER.ENGLISH)
@@ -93,6 +100,10 @@ public class MappingTest extends BaseUnit {
 		
 		MappingField mf36 = new MappingField(new ParentField(mappingType2));
 		mappingType3.addField(mf36);
+		
+		MappingField mf37 = new MappingField(new RoutingField());
+		mf37	.addParameter(MappingParameter.REQUIRED.FLASE);
+		mappingType3.addField(mf37);
 		
 //		putBuilder.setType("mType1").setSource(mappingType1.buildSetting(null));
 		putBuilder.setType("mType2").setSource(mappingType2.buildSetting(null));

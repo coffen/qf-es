@@ -70,6 +70,8 @@ public class MappingParameter {
 	public final static Similarity SIMILARITY = parameter.new Similarity();
 	// 向量设置
 	public final static TermVector TERM_VECTOR = parameter.new TermVector();
+	// 是否需要
+	public final static Required REQUIRED = parameter.new Required();
 	// 文档别名
 	public final static Fields FIELDS = parameter.new Fields();
 	
@@ -373,6 +375,19 @@ public class MappingParameter {
 		public MappingParameterValue WITH_POSITIONS = new MappingParameterValue(this, "with_positions");
 		public MappingParameterValue WITH_OFFSETS = new MappingParameterValue(this, "with_offsets");
 		public MappingParameterValue WITH_POSITIONS_OFFSETS = new MappingParameterValue(this, "with_positions_offsets");
+		
+	}
+	
+	public class Required extends MappingParameterType {
+
+		private Required() {};
+		
+		public String getPropertyName() {
+			return "required";
+		}
+		
+		public MappingParameterValue TRUE = new MappingParameterValue(this, "true");
+		public MappingParameterValue FLASE = new MappingParameterValue(this, "false");
 		
 	}
 	
