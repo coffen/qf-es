@@ -411,7 +411,9 @@ public class MappingParameter {
 		
 		private MappingParameterValue(MappingParameterType parameter, Object ... value) {
 			this.parameterType = parameter;
-			this.value = value;
+			if (value != null && value.length > 0) {
+				this.value = value[0];
+			}
 		}
 		
 		public MappingParameterType getParameterType() {

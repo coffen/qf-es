@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class DoubleField extends NumbericField {
 	
+	static {
+		SUPPORTED_PARAMETER.addAll(NumbericField.SUPPORTED_PARAMETER);
+	}
+	
 	public DoubleField(String name) {
 		super(name);
 	}

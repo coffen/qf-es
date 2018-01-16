@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class ShortField extends NumbericField {
 	
+	static {
+		SUPPORTED_PARAMETER.addAll(NumbericField.SUPPORTED_PARAMETER);
+	}
+	
 	public ShortField(String name) {
 		super(name);
 	}

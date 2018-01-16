@@ -40,5 +40,10 @@ public abstract class MetaField extends Field {
 		}
 		return new HashMap<String, Object>();
 	}
+	
+	@Override
+	public String getName() {
+		return getPropertyName();
+	}
 
 }

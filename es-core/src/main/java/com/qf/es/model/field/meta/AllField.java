@@ -29,7 +29,7 @@ public final class AllField extends MetaField {
 		SUPPORTED_PARAMETER.add(MappingParameter.TERM_VECTOR);
 		SUPPORTED_PARAMETER.add(MappingParameter.INDEX_OPTIONS);
 	}
-
+	
 	@Override
 	public String getPropertyName() {
 		return "_all";

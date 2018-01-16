@@ -23,6 +23,8 @@ import com.qf.es.model.MappingParameter;
 public final class TextField extends StringField {
 	
 	static {
+		SUPPORTED_PARAMETER.addAll(StringField.SUPPORTED_PARAMETER);
+		
 		SUPPORTED_PARAMETER.add(MappingParameter.ANALYZER);
 		SUPPORTED_PARAMETER.add(MappingParameter.SEARCH_ANALYZER);
 		SUPPORTED_PARAMETER.add(MappingParameter.FIELDDATA);

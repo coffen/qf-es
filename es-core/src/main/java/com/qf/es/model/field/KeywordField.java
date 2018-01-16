@@ -20,6 +20,10 @@ package com.qf.es.model.field;
  */
 public final class KeywordField extends StringField {
 	
+	static {
+		SUPPORTED_PARAMETER.addAll(StringField.SUPPORTED_PARAMETER);		
+	}
+	
 	public KeywordField(String name) {
 		super(name);
 	}
