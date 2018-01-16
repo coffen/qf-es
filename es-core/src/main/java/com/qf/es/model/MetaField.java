@@ -1,5 +1,10 @@
 package com.qf.es.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 
  * <p>
@@ -26,6 +31,14 @@ public abstract class MetaField extends Field {
 
 	private MetaField(String name) {
 		super(name);
+	}
+	
+	@Override
+	public Map<String, Object> buildSetting(Value value) {
+		if (StringUtils.isBlank(getPropertyName())) {
+			throw new RuntimeException("Meta field property name must not empty.");
+		}
+		return new HashMap<String, Object>();
 	}
 
 }

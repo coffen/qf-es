@@ -47,6 +47,10 @@ public class MappingField implements Setting {
 		return field.getName();
 	}
 	
+	public boolean isMeta() {
+		return field instanceof MetaField;
+	}
+	
 	public MappingField addParameter(MappingParameterValue parameter) {
 		if (!field.supportParameter(parameter)) {
 			log.error("Unsupported mapping parameter {} for field {}", parameter, field.getName());
@@ -70,23 +74,15 @@ public class MappingField implements Setting {
 	
 	public Map<String, Object> buildSetting(Value value) {
 		Map<String, Object> map = field.buildSetting(value);
-		if (map == null || map.size() == 0) {
-			throw new RuntimeException("Field setting can not be empty");
-		}
 		for (MappingParameterValue parameter : parameterSet) {
 			MappingParameterType type = parameter.getParameterType();
-			Object obj = parameter.getValue();
-			if (obj != null) {
-				if (obj instanceof MappingField) {
-					Map<String, Object> innerMap = ((MappingField)obj).buildSetting(value);
-					if (innerMap != null) {
-						map.put(type.getPropertyName(), innerMap);
-					}
-				}
-				else {
-					map.put(type.getPropertyName(), obj);
-				}
+			Map<String, Object> m = type.buildSetting(parameter);
+			if (m != null && m.size() > 0) {
+				map.putAll(m);
 			}
+		}
+		if (map == null || map.size() == 0) {
+			throw new RuntimeException("Field setting can not be empty");
 		}
 		return map;
 	}

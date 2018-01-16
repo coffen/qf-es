@@ -26,11 +26,8 @@ import org.apache.commons.lang3.StringUtils;
 public class MappingType implements Setting {
 	
 	private String typeName;
-	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
 	
-	private boolean enableAll;
-	private boolean enableSource;
-	private boolean enableFieldNames;
+	private Map<String, MappingField> fieldMap = new HashMap<String, MappingField>();
 	
 	public MappingType(String typeName) {
 		if (StringUtils.isBlank(typeName)) {
@@ -43,38 +40,14 @@ public class MappingType implements Setting {
 		return typeName;
 	}
 	
-	public void setEnableAll(boolean enableAll) {
-		this.enableAll = enableAll;
-	}
-	
-	public boolean isEnableAll() {
-		return enableAll;
-	}
-	
-	public void setEnableSource(boolean enableSource) {
-		this.enableSource = enableSource;
-	}
-	
-	public boolean isEnableSource() {
-		return enableSource;
-	}
-	
-	public void setEnableFieldNames(boolean enableFieldNames) {
-		this.enableFieldNames = enableFieldNames;
-	}
-	
-	public boolean isEnableFieldNames() {
-		return enableFieldNames;
-	}
-	
 	public boolean addField(MappingField field) {
-		if (field == null || StringUtils.isBlank(field.getPropertyName())) {
+		if (field == null || StringUtils.isBlank(field.getFieldName())) {
 			return false;
 		}
-		String propertyName = field.getPropertyName();
-		boolean contains = fieldMap.containsKey(propertyName);
+		String fieldName = field.getFieldName();
+		boolean contains = fieldMap.containsKey(fieldName);
 		if (!contains) {
-			fieldMap.put(propertyName, field);
+			fieldMap.put(fieldName, field);
 		}
 		return !contains;
 	}
@@ -90,7 +63,12 @@ public class MappingType implements Setting {
 		for (MappingField field : fieldMap.values()) {
 			Map<String, Object> fieldSetting = field.buildSetting(value);
 			if (fieldSetting != null) {
-				properties.put(field.getPropertyName(), fieldSetting);
+				if (field.isMeta()) {
+					map.put(field.getPropertyName(), fieldSetting);
+				}
+				else {
+					properties.put(field.getPropertyName(), fieldSetting);
+				}
 			}
 		}
 		return map;
