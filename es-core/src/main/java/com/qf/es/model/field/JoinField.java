@@ -38,8 +38,8 @@ public final class JoinField extends Field {
 			throw new RuntimeException("Relation must not empty.");
 		}
 		for (JoinRelation relation : relations) {
-			if (StringUtils.isBlank(relation.getParent()) || StringUtils.isBlank(relation.getChild())) {
-				throw new RuntimeException("Relation parent field and child field must not empty.");
+			if (StringUtils.isBlank(relation.getParent()) || CollectionUtils.isEmpty(relation.getChildren())) {
+				throw new RuntimeException("Relation parent field and children field must not empty.");
 			}
 		}
 	}
@@ -53,9 +53,9 @@ public final class JoinField extends Field {
 	public Map<String, Object> buildSetting(Value value) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("type", getPropertyName());
-		Map<String, String> relationMap = new HashMap<String, String>();
+		Map<String, List<String>> relationMap = new HashMap<String, List<String>>();
 		for (JoinRelation relation : relations) {
-			relationMap.put(relation.getParent(), relation.getChild());
+			relationMap.put(relation.getParent(), relation.getChildren());
 		}
 		map.put("relations", relationMap);
 		return map;

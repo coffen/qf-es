@@ -1,5 +1,7 @@
 package com.qf.es.model.field;
 
+import java.util.List;
+
 /**
  * 
  * <p>
@@ -21,19 +23,19 @@ package com.qf.es.model.field;
 public class JoinRelation {
 	
 	private String parent;
-	private String child;
+	private List<String> children;
 	
-	public JoinRelation(String parent, String child) {
+	public JoinRelation(String parent, List<String> child) {
 		this.parent = parent;
-		this.child = child;
+		this.children = child;
 	}
 	
 	public String getParent() {
 		return parent;
 	}
 	
-	public String getChild() {
-		return child;
+	public List<String> getChildren() {
+		return children;
 	}
 
 }
