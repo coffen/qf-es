@@ -135,6 +135,21 @@ public class MappingTest extends BaseUnit {
 		putFuture = putBuilder.execute();
 		putResponse = putFuture.get();
 		log.error("Response: {}", putResponse.isAcknowledged());
+		
+		MappingType mType5 = new MappingType("mType5");
+		
+		MappingField mf51 = new MappingField(new KeywordField("officeId"));
+		mf51	.addParameter(MappingParameter.STORE.TRUE)
+ 		 	.addParameter(MappingParameter.INDEX.TRUE);
+		mType5.addField(mf51);
+		
+		putBuilder = client.preparePutMapping("test");
+		Map<String, Object> map5 = mType5.buildSetting(null);
+		log.error(JSON.toJSONString(map5));		
+		putBuilder.setType("mType5").setSource(map5);		
+		putFuture = putBuilder.execute();		
+		putResponse = putFuture.get();
+		log.error("Response: {}", putResponse.isAcknowledged());
 	}
 	
 	@Test

@@ -87,6 +87,15 @@ public class IndexTest extends BaseUnit {
 		builder.setParent("1");
 		IndexResponse response3 = builder.execute().actionGet();
 		log.error(JSON.toJSONString(response3.getResult()));
+		
+		MType5 mType5 = new MType5();
+		mType5.setOfficeId("222");
+		
+		JSONObject obj5 = (JSONObject)JSON.toJSON(mType5);
+		builder = transportClient.prepareIndex("test", "mType5", "1");
+		builder.setSource(obj5);
+		IndexResponse response5 = builder.execute().actionGet();
+		log.error(JSON.toJSONString(response5.getResult()));		
 	}
 
 }
