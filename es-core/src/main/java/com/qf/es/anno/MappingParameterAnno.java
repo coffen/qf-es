@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * <br>
  * Description: 映射参数
  * <br>
- * File Name: MappingParameter.java
+ * File Name: MappingParameterAnno.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
@@ -27,10 +27,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface MappingParameter {
+public @interface MappingParameterAnno {
 	
-	String name();
+	Class<? extends MappingParameterAnno> name();
 	
-	MetaField[] meta();
+	MetaFieldAnno[] meta();
 
 }

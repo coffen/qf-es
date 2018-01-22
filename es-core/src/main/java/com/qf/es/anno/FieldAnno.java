@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
  * <p>
  * Project Name: 淘客
  * <br>
- * Description: 元数据映射属性
+ * Description: 映射属性
  * <br>
- * File Name: MetaField.java
+ * File Name: FieldAnno.java
  * <br>
  * Copyright: Copyright (C) 2015 All Rights Reserved.
  * <br>
@@ -27,8 +27,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface MetaField {
+public @interface FieldAnno {
 	
-	String name();
+	
 
 }
