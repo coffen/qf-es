@@ -24,13 +24,13 @@ import java.lang.annotation.Target;
  * @version: v1.0
  *
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface MappingTypeAnno {
 	
-	String name();
+	String name() default "";
 	
-	MetaFieldAnno[] meta();
+	MetaFieldAnno[] value() default {};
 
 }

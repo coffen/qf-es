@@ -2,6 +2,7 @@ package com.qf.es.anno;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -24,11 +25,18 @@ import java.lang.annotation.Target;
  * @version: v1.0
  *
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(value=MappingTypeAnno.class)
 @Documented
 public @interface MetaFieldAnno {
 	
-	String name();
+	String type();
+	
+	String refererType() default "";
+	
+	String[] refererFields() default {};
+	
+	MappingParameterAnno[] parameters() default {};
 
 }

@@ -24,11 +24,19 @@ import java.lang.annotation.Target;
  * @version: v1.0
  *
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface FieldAnno {
 	
+	String type() default "";
 	
+	String refererType() default "";
+	
+	String[] refererFields() default {};
+	
+	MappingParameterAnno[] value() default {};
+	
+	MappingParameterAnno[] parameters() default {};
 
 }
